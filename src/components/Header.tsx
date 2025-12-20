@@ -1,10 +1,12 @@
 import { useState, useEffect } from "react";
 import { Menu, X, Moon, Sun } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import SignUpModal from "./SignUpModal";
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isDark, setIsDark] = useState(false);
+  const [isSignUpOpen, setIsSignUpOpen] = useState(false);
 
   useEffect(() => {
     const savedTheme = localStorage.getItem("theme");
@@ -77,7 +79,10 @@ const Header = () => {
               )}
             </button>
             
-            <Button className="hidden md:flex bg-primary hover:bg-primary/90 text-primary-foreground rounded-full px-8 py-2 hover:scale-105 transition-all">
+            <Button 
+              onClick={() => setIsSignUpOpen(true)}
+              className="hidden md:flex bg-primary hover:bg-primary/90 text-primary-foreground rounded-full px-8 py-2 hover:scale-105 transition-all"
+            >
               Join Now
             </Button>
 
@@ -111,13 +116,18 @@ const Header = () => {
               <a href="/about" className="text-sm font-medium hover:text-accent transition-colors">
                 About
               </a>
-              <Button className="bg-primary hover:bg-primary/90 text-primary-foreground rounded-full w-full">
+              <Button 
+                onClick={() => setIsSignUpOpen(true)}
+                className="bg-primary hover:bg-primary/90 text-primary-foreground rounded-full w-full"
+              >
                 Join Now
               </Button>
             </nav>
           </div>
         )}
       </div>
+
+      <SignUpModal isOpen={isSignUpOpen} onClose={() => setIsSignUpOpen(false)} />
     </header>
   );
 };
