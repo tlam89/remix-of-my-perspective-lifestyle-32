@@ -31,6 +31,7 @@ import {
   CollapsibleTrigger,
 } from "@/components/ui/collapsible";
 import { cn } from "@/lib/utils";
+import logo from "@/assets/logo.png";
 
 const mainMenuItems = [
   { title: "Dashboard", url: "/dashboard", icon: LayoutDashboard },
@@ -75,12 +76,14 @@ export function DashboardSidebar() {
     <Sidebar collapsible="icon">
       <SidebarHeader className="border-b border-sidebar-border p-4">
         <Link to="/dashboard" className="flex items-center gap-2">
-          <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary text-primary-foreground font-serif font-bold">
-            P
-          </div>
+          <img 
+            src={logo} 
+            alt="UMP Logo" 
+            className="h-8 w-8 object-contain flex-shrink-0"
+          />
           {!isCollapsed && (
             <span className="font-serif text-lg font-semibold text-sidebar-foreground">
-              Perspective
+              UMP
             </span>
           )}
         </Link>
