@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { X, Mail, Lock, User, Eye, EyeOff } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -25,6 +26,7 @@ const SignUpModal = ({ isOpen, onClose }: SignUpModalProps) => {
   const [errors, setErrors] = useState<{ name?: string; email?: string; password?: string }>({});
   const [isLoading, setIsLoading] = useState(false);
   const { toast } = useToast();
+  const navigate = useNavigate();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -57,6 +59,7 @@ const SignUpModal = ({ isOpen, onClose }: SignUpModalProps) => {
     setEmail("");
     setPassword("");
     onClose();
+    navigate("/dashboard");
   };
 
   const handleBackdropClick = (e: React.MouseEvent) => {

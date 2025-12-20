@@ -54,6 +54,16 @@ All colors MUST be HSL.
     --surface-elevated: 36 44% 98%;
     --shadow-soft: 0 0% 0%;
     --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+
+    /* Sidebar tokens */
+    --sidebar-background: 33 40% 94%;
+    --sidebar-foreground: 0 0% 18%;
+    --sidebar-primary: 0 0% 18%;
+    --sidebar-primary-foreground: 36 44% 96%;
+    --sidebar-accent: 33 30% 88%;
+    --sidebar-accent-foreground: 0 0% 18%;
+    --sidebar-border: 33 25% 85%;
+    --sidebar-ring: 0 0% 18%;
   }
 
   .dark {
@@ -99,6 +109,16 @@ All colors MUST be HSL.
     --cream-foreground: 36 44% 96%;
     --surface-elevated: 0 0% 16%;
     --shadow-soft: 0 0% 0%;
+
+    /* Sidebar tokens */
+    --sidebar-background: 0 0% 14%;
+    --sidebar-foreground: 36 44% 96%;
+    --sidebar-primary: 36 44% 96%;
+    --sidebar-primary-foreground: 0 0% 18%;
+    --sidebar-accent: 0 0% 20%;
+    --sidebar-accent-foreground: 36 44% 96%;
+    --sidebar-border: 0 0% 20%;
+    --sidebar-ring: 36 44% 96%;
   }
 }
 
