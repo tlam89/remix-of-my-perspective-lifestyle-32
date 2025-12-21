@@ -145,24 +145,6 @@ export default function InitiativeApplicationForm({ onVerify }: InitiativeApplic
     <Card className="border-border shadow-lg">
       {/* Header Section */}
       <CardHeader className="border-b border-border pb-4">
-        <div className="grid grid-cols-2 gap-4">
-          <div className="text-center">
-            <h3 className="font-bold text-sm">ĐẠI HỌC Y DƯỢC <br/> THÀNH PHỐ HỒ CHÍ MINH</h3>
-            <div className="mt-2 flex justify-center items-center gap-2">
-              <span className="font-bold text-sm">ĐƠN VỊ:</span>
-              <Input 
-                className="w-32 text-center font-bold text-primary"
-                value={formData.unitName}
-                onChange={(e) => handleInputChange('unitName', e.target.value)}
-              />
-            </div>
-          </div>
-          <div className="text-center">
-            <h3 className="font-bold text-xs uppercase">Cộng Hòa Xã Hội Chủ Nghĩa Việt Nam</h3>
-            <p className="font-bold text-xs underline mb-2">Độc lập - Tự do - Hạnh phúc</p>
-            <p className="text-xs italic text-muted-foreground">Mẫu số 02</p>
-          </div>
-        </div>
         
         <div className="text-center mt-6">
           <CardTitle className="text-2xl font-bold uppercase mb-2">

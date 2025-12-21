@@ -15,7 +15,7 @@ const Wellness = () => {
         {/* Hero Section */}
         <div className="mb-16 text-center space-y-6">
           <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight animate-slide-down">
-            Wellness & Self-Care
+            Sáng kiến
           </h1>
           <p className="text-lg text-muted-foreground max-w-3xl mx-auto leading-relaxed animate-slide-up stagger-1">
             Discover practices, insights, and strategies to nurture your physical, mental, and emotional wellbeing. 
@@ -40,13 +40,16 @@ const Wellness = () => {
             <h2 className="text-3xl font-bold mb-6">Why Wellness Matters</h2>
             <div className="space-y-4 text-muted-foreground">
               <p>
-                Wellness is not just about physical health—it's about creating harmony between body, mind, and spirit. 
-                In our fast-paced world, taking time to nurture ourselves isn't a luxury; it's essential for sustainable living.
+                1. Mục đích
+                    Quy định này hướng dẫn về điều kiện, thủ tục công nhận, ứng dụng,
+                    khen thưởng sáng kiến và các công việc khác của hoạt động sáng kiến trong Đại
+                    học Y Dược Thành phố Hồ Chí Minh.
+
               </p>
               <p>
-                Through thoughtful self-care practices, we can build resilience, improve our relationships, enhance our 
-                productivity, and ultimately, live more fulfilling lives. Whether it's through nutrition, movement, 
-                meditation, or simply learning to rest, every small step toward wellness counts.
+                2. Phạm vi áp dụng
+                  Quy định này được áp dụng đối với tổ chức, cá nhân thuộc quyền quản
+                  lý của Đại học Y Dược Thành phố Hồ Chí Minh.
               </p>
             </div>
           </div>

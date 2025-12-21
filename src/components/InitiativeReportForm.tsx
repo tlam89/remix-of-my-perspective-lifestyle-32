@@ -130,12 +130,18 @@ export default function InitiativeReportForm({ onVerify }: InitiativeReportFormP
   return (
     <Card className="border-border shadow-lg">
       {/* Header */}
-      <CardHeader className="bg-primary text-primary-foreground text-center rounded-t-lg">
+      {/* <CardHeader className="bg-primary text-primary-foreground text-center rounded-t-lg">
         <CardTitle className="text-2xl font-bold uppercase tracking-wide">
           Báo Cáo Mô Tả Sáng Kiến
         </CardTitle>
         <p className="text-sm opacity-80 mt-2">Mẫu đơn đăng ký xét công nhận sáng kiến</p>
-      </CardHeader>
+      </CardHeader> */}
+
+      <div className="text-center mt-6">
+          <CardTitle className="text-2xl font-bold uppercase mb-2">
+            Báo Cáo Mô Tả Sáng Kiến
+          </CardTitle>
+      </div>
 
       <CardContent className="p-6 md:p-8 space-y-8">
         {/* Section 1: Introduction & Basic Info */}

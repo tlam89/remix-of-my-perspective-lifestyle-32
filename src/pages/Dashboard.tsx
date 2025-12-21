@@ -25,12 +25,6 @@ export default function Dashboard() {
       <ResizablePanelGroup direction="horizontal" className="h-full">
         <ResizablePanel defaultSize={70} minSize={50}>
           <div className="h-full overflow-auto p-6">
-            <div className="mb-6">
-              <h1 className="text-3xl font-bold tracking-tight">Dashboard</h1>
-              <p className="text-muted-foreground">
-                Quản lý và đăng ký sáng kiến của bạn.
-              </p>
-            </div>
             
             <Tabs defaultValue="report" className="w-full">
               <TabsList className="mb-4">

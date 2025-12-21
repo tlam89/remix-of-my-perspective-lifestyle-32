@@ -45,32 +45,32 @@ const Header = () => {
                 alt="UMP Logo" 
                 className="w-8 h-8 sm:w-10 sm:h-10 object-contain flex-shrink-0"
               />
-              <span className="text-base sm:text-xl font-bold font-serif truncate">UMP</span>
+              <span className="text-base sm:text-xl font-bold font-serif truncate">Đại Học Y Dược TP. Hồ Chí Minh</span>
             </a>
           </div>
 
           {/* Desktop Navigation */}
           <nav className="hidden md:flex items-center gap-2">
             <a href="/" className="text-sm font-medium hover:bg-muted/60 rounded-full px-4 py-2 transition-all">
-              Home
+              Trang chủ
             </a>
             <a href="/#articles" className="text-sm font-medium hover:bg-muted/60 rounded-full px-4 py-2 transition-all">
-              Articles
+              Tư vấn
             </a>
             <a href="/wellness" className="text-sm font-medium hover:bg-muted/60 rounded-full px-4 py-2 transition-all">
-              Wellness
+              Sáng kiến
             </a>
             <a href="/travel" className="text-sm font-medium hover:bg-muted/60 rounded-full px-4 py-2 transition-all">
-              Travel
+              Y Đức
             </a>
             <a href="/about" className="text-sm font-medium hover:bg-muted/60 rounded-full px-4 py-2 transition-all">
-              About
+              Thành viên
             </a>
           </nav>
 
           {/* Actions */}
           <div className="flex items-center gap-2 sm:gap-4 flex-shrink-0">
-            <button
+            {/* <button
               onClick={toggleTheme}
               className="p-1.5 sm:p-2 rounded-full hover:bg-muted/60 transition-all"
               aria-label="Toggle theme"
@@ -80,13 +80,13 @@ const Header = () => {
               ) : (
                 <Moon className="h-4 w-4 sm:h-5 sm:w-5" />
               )}
-            </button>
+            </button> */}
             
             <Button 
               onClick={() => setIsSignUpOpen(true)}
               className="hidden md:flex bg-primary hover:bg-primary/90 text-primary-foreground rounded-full px-8 py-2 hover:scale-105 transition-all"
             >
-              Join Now
+              Đăng nhập
             </Button>
 
             {/* Mobile Menu Button */}
@@ -105,25 +105,25 @@ const Header = () => {
           <div className="md:hidden py-4 border-t border-border animate-fade-in">
             <nav className="flex flex-col gap-4">
               <a href="/" className="text-sm font-medium hover:text-accent transition-colors">
-                Home
+                Trang chủ
               </a>
               <a href="/#articles" className="text-sm font-medium hover:text-accent transition-colors">
-                Articles
+                Tư vấn
               </a>
               <a href="/wellness" className="text-sm font-medium hover:text-accent transition-colors">
-                Wellness
+                Sáng kiến
               </a>
               <a href="/travel" className="text-sm font-medium hover:text-accent transition-colors">
-                Travel
+                Y Đức
               </a>
               <a href="/about" className="text-sm font-medium hover:text-accent transition-colors">
-                About
+                Dịch vụ
               </a>
               <Button 
                 onClick={() => setIsSignUpOpen(true)}
                 className="bg-primary hover:bg-primary/90 text-primary-foreground rounded-full w-full"
               >
-                Join Now
+                Đăng nhập
               </Button>
             </nav>
           </div>
