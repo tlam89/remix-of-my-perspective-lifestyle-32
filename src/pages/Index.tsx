@@ -19,7 +19,7 @@ const Index = () => {
         <IntroSection />
 
         {/* Featured Articles Grid */}
-        <section id="articles" className="py-12">
+        {/* <section id="articles" className="py-12">
           <div className="flex items-center justify-between mb-12 animate-slide-up">
             <h2 className="text-3xl md:text-4xl font-bold tracking-tight">Featured Articles</h2>
             <a href="#all" className="text-sm font-medium text-muted-foreground hover:text-accent transition-colors px-4 py-2 rounded-full hover:bg-muted/60">
@@ -34,10 +34,10 @@ const Index = () => {
               </div>
             ))}
           </div>
-        </section>
+        </section> */}
 
         {/* Newsletter Section */}
-        <section className="my-20 rounded-[2.5rem] bg-card p-12 md:p-16 text-center animate-scale-in">
+        {/* <section className="my-20 rounded-[2.5rem] bg-card p-12 md:p-16 text-center animate-scale-in">
           <div className="max-w-2xl mx-auto space-y-8">
             <h2 className="text-4xl md:text-5xl font-bold tracking-tight">Stay inspired.</h2>
             <p className="text-xl text-muted-foreground leading-relaxed">
@@ -54,7 +54,7 @@ const Index = () => {
               </button>
             </div>
           </div>
-        </section>
+        </section> */}
       </main>
 
       {/* Footer */}

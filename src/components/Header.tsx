@@ -52,10 +52,10 @@ const Header = () => {
           {/* Desktop Navigation */}
           <nav className="hidden md:flex items-center gap-2">
             <a href="/" className="text-sm font-medium hover:bg-muted/60 rounded-full px-4 py-2 transition-all">
-              Trang chủ
+              Nghiên cứu
             </a>
             <a href="/#articles" className="text-sm font-medium hover:bg-muted/60 rounded-full px-4 py-2 transition-all">
-              Tư vấn
+              Hợp Tác
             </a>
             <a href="/wellness" className="text-sm font-medium hover:bg-muted/60 rounded-full px-4 py-2 transition-all">
               Sáng kiến
@@ -105,10 +105,10 @@ const Header = () => {
           <div className="md:hidden py-4 border-t border-border animate-fade-in">
             <nav className="flex flex-col gap-4">
               <a href="/" className="text-sm font-medium hover:text-accent transition-colors">
-                Trang chủ
+                Nghiên cứu
               </a>
               <a href="/#articles" className="text-sm font-medium hover:text-accent transition-colors">
-                Tư vấn
+                Hợp Tác
               </a>
               <a href="/wellness" className="text-sm font-medium hover:text-accent transition-colors">
                 Sáng kiến
