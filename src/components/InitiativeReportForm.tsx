@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Plus, Trash2, Save, FileText } from 'lucide-react';
+import { Plus, Trash2, Save, FileText, CheckCircle2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
@@ -45,6 +45,10 @@ interface InitiativeFormState {
   authorName: string;
 }
 
+interface InitiativeReportFormProps {
+  onVerify?: (fieldName: string, content: string) => void;
+}
+
 const initialFormState: InitiativeFormState = {
   introduction: '',
   initiativeName: '',
@@ -70,7 +74,7 @@ const initialFormState: InitiativeFormState = {
   authorName: '',
 };
 
-export default function InitiativeReportForm() {
+export default function InitiativeReportForm({ onVerify }: InitiativeReportFormProps) {
   const [formData, setFormData] = useState<InitiativeFormState>(initialFormState);
 
   const handleInputChange = (field: keyof InitiativeFormState, value: string) => {
@@ -102,6 +106,26 @@ export default function InitiativeReportForm() {
       trialUnits: prev.trialUnits.filter((unit) => unit.id !== id),
     }));
   };
+
+  const handleVerify = (fieldName: string, content: string) => {
+    if (onVerify && content.trim()) {
+      onVerify(fieldName, content);
+    }
+  };
+
+  const VerifyButton = ({ fieldName, content }: { fieldName: string; content: string }) => (
+    <Button
+      type="button"
+      variant="outline"
+      size="sm"
+      className="mt-2 gap-1 text-xs"
+      onClick={() => handleVerify(fieldName, content)}
+      disabled={!content.trim()}
+    >
+      <CheckCircle2 size={14} />
+      Kiểm tra
+    </Button>
+  );
 
   return (
     <Card className="border-border shadow-lg">
@@ -147,6 +171,7 @@ export default function InitiativeReportForm() {
               value={formData.introduction}
               onChange={(e) => handleInputChange('introduction', e.target.value)}
             />
+            <VerifyButton fieldName="Mở đầu (Sự cần thiết)" content={formData.introduction} />
           </div>
         </section>
 
@@ -167,6 +192,7 @@ export default function InitiativeReportForm() {
               value={formData.currentStatus}
               onChange={(e) => handleInputChange('currentStatus', e.target.value)}
             />
+            <VerifyButton fieldName="Tình trạng trước khi có sáng kiến" content={formData.currentStatus} />
           </div>
           
           <div className="space-y-4">
@@ -189,6 +215,7 @@ export default function InitiativeReportForm() {
                   value={formData.implementationSteps}
                   onChange={(e) => handleInputChange('implementationSteps', e.target.value)}
                 />
+                <VerifyButton fieldName="Các bước thực hiện giải pháp" content={formData.implementationSteps} />
               </div>
               
               <div>
@@ -291,6 +318,7 @@ export default function InitiativeReportForm() {
               value={formData.novelty}
               onChange={(e) => handleInputChange('novelty', e.target.value)}
             />
+            <VerifyButton fieldName="Tính mới của sáng kiến" content={formData.novelty} />
           </div>
           
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-4">
@@ -304,6 +332,7 @@ export default function InitiativeReportForm() {
                 value={formData.effectiveness.economic}
                 onChange={(e) => handleEffectivenessChange('economic', e.target.value)}
               />
+              <VerifyButton fieldName="Hiệu quả Kinh tế" content={formData.effectiveness.economic} />
             </div>
             
             <div className="bg-muted/50 p-4 rounded">
@@ -316,6 +345,7 @@ export default function InitiativeReportForm() {
                 value={formData.effectiveness.teaching}
                 onChange={(e) => handleEffectivenessChange('teaching', e.target.value)}
               />
+              <VerifyButton fieldName="Hiệu quả Công việc/Giảng dạy" content={formData.effectiveness.teaching} />
             </div>
             
             <div className="bg-muted/50 p-4 rounded">
@@ -328,6 +358,7 @@ export default function InitiativeReportForm() {
                 value={formData.effectiveness.safety}
                 onChange={(e) => handleEffectivenessChange('safety', e.target.value)}
               />
+              <VerifyButton fieldName="Môi trường & An toàn" content={formData.effectiveness.safety} />
             </div>
             
             <div className="bg-muted/50 p-4 rounded">
@@ -340,6 +371,7 @@ export default function InitiativeReportForm() {
                 value={formData.effectiveness.social}
                 onChange={(e) => handleEffectivenessChange('social', e.target.value)}
               />
+              <VerifyButton fieldName="Nhận thức & Xã hội" content={formData.effectiveness.social} />
             </div>
           </div>
         </section>
