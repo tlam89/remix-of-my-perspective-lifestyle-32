@@ -1,6 +1,7 @@
 import { useState, useCallback } from "react";
 import InitiativeReportForm from "@/components/InitiativeReportForm";
 import InitiativeApplicationForm from "@/components/InitiativeApplicationForm";
+import ContributionConfirmationForm from "@/components/ContributionConfirmationForm";
 import ChatAssistant from "@/components/ChatAssistant";
 import {
   ResizableHandle,
@@ -30,12 +31,16 @@ export default function Dashboard() {
               <TabsList className="mb-4">
                 <TabsTrigger value="report">Báo cáo Mô tả Sáng kiến</TabsTrigger>
                 <TabsTrigger value="application">Đơn Đề nghị Công nhận</TabsTrigger>
+                <TabsTrigger value="contribution">Xác nhận Tỷ lệ Đóng góp</TabsTrigger>
               </TabsList>
               <TabsContent value="report">
                 <InitiativeReportForm onVerify={handleVerify} />
               </TabsContent>
               <TabsContent value="application">
                 <InitiativeApplicationForm onVerify={handleVerify} />
+              </TabsContent>
+              <TabsContent value="contribution">
+                <ContributionConfirmationForm onVerify={handleVerify} />
               </TabsContent>
             </Tabs>
           </div>
