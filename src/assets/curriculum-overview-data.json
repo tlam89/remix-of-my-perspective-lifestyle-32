@@ -1,0 +1,36 @@
+{
+  "courseHeader": {
+    "category": "Giáo dục Đại cương",
+    "credits": "3 Tín chỉ",
+    "title": "Nhập môn Nghệ thuật Tự do: Khám phá Kiến thức Liên ngành",
+    "description": "Khóa học này cung cấp cái nhìn tổng quan nền tảng về các ý tưởng chính trong nhân văn, khoa học xã hội, khoa học tự nhiên và nghệ thuật. Sinh viên sẽ khám phá cách các lĩnh vực khác nhau kết nối với nhau, phát triển kỹ năng tư duy phê phán và áp dụng các khái niệm vào các vấn đề thực tế.",
+    "duration": "15 Tuần",
+    "audience": "Sinh viên năm nhất",
+    "format": "Kết hợp",
+    "prerequisites": "Không có"
+  },
+  "learningObjectives": [
+    "Xác định các khái niệm cốt lõi từ nhiều ngành và giải thích mối liên kết của chúng.",
+    "Phân tích văn bản, dữ liệu và tác phẩm nghệ thuật một cách có phê phán.",
+    "Áp dụng lý luận đạo đức vào các vấn đề đương đại.",
+    "Giao tiếp ý tưởng hiệu quả thông qua viết và thảo luận.",
+    "Phản ánh về sự phát triển cá nhân và giá trị của việc học tập suốt đời."
+  ],
+  "teachingMethods": [
+    { "method": "Giảng dạy", "percentage": 50, "description": "Tổng quan do giảng viên hướng dẫn với đa phương tiện" },
+    { "method": "Thảo luận/Hội thảo", "percentage": 30, "description": "Tranh luận nhóm nhỏ và tương tác đồng nghiệp" },
+    { "method": "Hoạt động", "percentage": 20, "description": "Dự án thực hành, diễn giả khách mời hoặc tham quan thực địa" }
+  ],
+  "gradingBreakdown": [
+    { "item": "Tham gia và Thảo luận", "weight": 20 },
+    { "item": "Bài kiểm tra (hàng tuần)", "weight": 20 },
+    { "item": "Kỳ thi/Bài luận Giữa kỳ", "weight": 20 },
+    { "item": "Dự án Cuối kỳ", "weight": 25 },
+    { "item": "Nhật ký Phản ánh", "weight": 15 }
+  ],
+  "requiredMaterials": [
+    { "title": "Sách giáo khoa", "description": "\"The Making of the Modern World\" của Richard Hooker (hoặc tuyển tập tương tự)" },
+    { "title": "Tài nguyên Trực tuyến", "description": "Truy cập miễn phí JSTOR, Khan Academy hoặc TED Talks" },
+    { "title": "Dụng cụ", "description": "Sổ ghi chép để phản ánh; truy cập máy tính cho bài tập" }
+  ]
+}
