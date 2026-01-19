@@ -18,6 +18,7 @@ import Terms from "./pages/Terms";
 import NotFound from "./pages/NotFound";
 import { DashboardLayout } from "./layouts/DashboardLayout";
 import Dashboard from "./pages/Dashboard";
+import Curriculum from "./pages/Curriculum";
 
 const queryClient = new QueryClient();
 
@@ -44,6 +45,7 @@ const App = () => (
           {/* Dashboard routes */}
           <Route path="/dashboard" element={<DashboardLayout />}>
             <Route index element={<Dashboard />} />
+            <Route path="curriculum" element={<Curriculum />} />
           </Route>
           
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
