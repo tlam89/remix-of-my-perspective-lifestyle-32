@@ -25,7 +25,7 @@ export default function Curriculum() {
   const { hasPermission, user } = useAuth();
 
   const canEdit = hasPermission('curriculum.edit');
-  const canChat = hasPermission('chat.access');
+  const canChat = hasPermission('chat.view') || hasPermission('chat.interact');
 
   const handleVerify = useCallback((fieldName: string, content: string) => {
     setVerificationRequest({ fieldName, content });

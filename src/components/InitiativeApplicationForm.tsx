@@ -57,6 +57,8 @@ interface ApplicationFormState {
 
 interface InitiativeApplicationFormProps {
   onVerify?: (fieldName: string, content: string) => void;
+  readOnly?: boolean;       // Editor & Admin: view only
+  showVerifyButton?: boolean; // Only Admin can see verify button
 }
 
 const initialFormState: ApplicationFormState = {
@@ -80,7 +82,7 @@ const initialFormState: ApplicationFormState = {
   submissionYear: 2025,
 };
 
-export default function InitiativeApplicationForm({ onVerify }: InitiativeApplicationFormProps) {
+export default function InitiativeApplicationForm({ onVerify, readOnly = false, showVerifyButton = false }: InitiativeApplicationFormProps) {
   const [formData, setFormData] = useState<ApplicationFormState>(initialFormState);
 
   const handleInputChange = (field: keyof ApplicationFormState, value: any) => {
@@ -127,19 +129,22 @@ export default function InitiativeApplicationForm({ onVerify }: InitiativeApplic
     }
   };
 
-  const VerifyButton = ({ fieldName, content }: { fieldName: string; content: string }) => (
-    <Button
-      type="button"
-      variant="outline"
-      size="sm"
-      className="mt-2 gap-1 text-xs"
-      onClick={() => handleVerify(fieldName, content)}
-      disabled={!content.trim()}
-    >
-      <CheckCircle2 size={14} />
-      Kiểm tra
-    </Button>
-  );
+  const VerifyButton = ({ fieldName, content }: { fieldName: string; content: string }) => {
+    if (!showVerifyButton) return null;
+    return (
+      <Button
+        type="button"
+        variant="outline"
+        size="sm"
+        className="mt-2 gap-1 text-xs"
+        onClick={() => handleVerify(fieldName, content)}
+        disabled={!content.trim()}
+      >
+        <CheckCircle2 size={14} />
+        Kiểm tra
+      </Button>
+    );
+  };
 
   return (
     <Card className="border-border shadow-lg">

@@ -16,9 +16,10 @@ interface Message {
 interface ChatAssistantProps {
   verificationRequest?: { fieldName: string; content: string } | null;
   onVerificationHandled?: () => void;
+  readOnly?: boolean; // If true, user can only view messages (for Editor role)
 }
 
-export default function ChatAssistant({ verificationRequest, onVerificationHandled }: ChatAssistantProps) {
+export default function ChatAssistant({ verificationRequest, onVerificationHandled, readOnly = false }: ChatAssistantProps) {
   const [messages, setMessages] = useState<Message[]>([
     {
       id: 1,
@@ -149,21 +150,29 @@ export default function ChatAssistant({ verificationRequest, onVerificationHandl
         </div>
       </ScrollArea>
 
-      {/* Input */}
-      <div className="p-4 border-t">
-        <div className="flex gap-2">
-          <Input
-            placeholder="Nhập câu hỏi của bạn..."
-            value={input}
-            onChange={(e) => setInput(e.target.value)}
-            onKeyDown={handleKeyDown}
-            className="flex-1"
-          />
-          <Button size="icon" onClick={handleSend} disabled={!input.trim()}>
-            <Send className="h-4 w-4" />
-          </Button>
+      {/* Input - Hidden for read-only mode (Editor) */}
+      {!readOnly ? (
+        <div className="p-4 border-t">
+          <div className="flex gap-2">
+            <Input
+              placeholder="Nhập câu hỏi của bạn..."
+              value={input}
+              onChange={(e) => setInput(e.target.value)}
+              onKeyDown={handleKeyDown}
+              className="flex-1"
+            />
+            <Button size="icon" onClick={handleSend} disabled={!input.trim()}>
+              <Send className="h-4 w-4" />
+            </Button>
+          </div>
         </div>
-      </div>
+      ) : (
+        <div className="p-4 border-t bg-muted/50">
+          <p className="text-xs text-muted-foreground text-center">
+            Chế độ chỉ xem - Không thể gửi tin nhắn
+          </p>
+        </div>
+      )}
     </div>
   );
 }
