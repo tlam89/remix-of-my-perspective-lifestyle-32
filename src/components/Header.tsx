@@ -1,13 +1,16 @@
 import { useState, useEffect } from "react";
 import { Menu, X, Moon, Sun } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import SignUpModal from "./SignUpModal";
+import { Link, useNavigate } from "react-router-dom";
+import { useAuth } from "@/contexts/AuthContext";
+import { UserMenu } from "@/components/UserMenu";
 import logo from "@/assets/logo.png";
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isDark, setIsDark] = useState(false);
-  const [isSignUpOpen, setIsSignUpOpen] = useState(false);
+  const { isAuthenticated } = useAuth();
+  const navigate = useNavigate();
 
   useEffect(() => {
     const savedTheme = localStorage.getItem("theme");
@@ -82,12 +85,16 @@ const Header = () => {
               )}
             </button> */}
             
-            <Button 
-              onClick={() => setIsSignUpOpen(true)}
-              className="hidden md:flex bg-primary hover:bg-primary/90 text-primary-foreground rounded-full px-8 py-2 hover:scale-105 transition-all"
-            >
-              Đăng nhập
-            </Button>
+            {isAuthenticated ? (
+              <UserMenu />
+            ) : (
+              <Button 
+                onClick={() => navigate('/login')}
+                className="hidden md:flex bg-primary hover:bg-primary/90 text-primary-foreground rounded-full px-8 py-2 hover:scale-105 transition-all"
+              >
+                Đăng nhập
+              </Button>
+            )}
 
             {/* Mobile Menu Button */}
             <button
@@ -119,18 +126,27 @@ const Header = () => {
               <a href="/about" className="text-sm font-medium hover:text-accent transition-colors">
                 Dịch vụ
               </a>
-              <Button 
-                onClick={() => setIsSignUpOpen(true)}
-                className="bg-primary hover:bg-primary/90 text-primary-foreground rounded-full w-full"
-              >
-                Đăng nhập
-              </Button>
+              {isAuthenticated ? (
+                <Button 
+                  onClick={() => navigate('/dashboard')}
+                  className="bg-primary hover:bg-primary/90 text-primary-foreground rounded-full w-full"
+                >
+                  Dashboard
+                </Button>
+              ) : (
+                <Button 
+                  onClick={() => navigate('/login')}
+                  className="bg-primary hover:bg-primary/90 text-primary-foreground rounded-full w-full"
+                >
+                  Đăng nhập
+                </Button>
+              )}
             </nav>
           </div>
         )}
       </div>
 
-      <SignUpModal isOpen={isSignUpOpen} onClose={() => setIsSignUpOpen(false)} />
+      
     </header>
   );
 };

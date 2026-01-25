@@ -46,7 +46,11 @@ interface CurriculumData {
 
 const STORAGE_KEY = "curriculum-overview-data";
 
-export default function CurriculumOverview() {
+interface CurriculumOverviewProps {
+  isEditMode?: boolean;
+}
+
+export default function CurriculumOverview({ isEditMode = true }: CurriculumOverviewProps) {
   const [data, setData] = useState<CurriculumData>(defaultData);
   const [editingSection, setEditingSection] = useState<string | null>(null);
   const [tempData, setTempData] = useState<CurriculumData>(defaultData);
@@ -97,16 +101,19 @@ export default function CurriculumOverview() {
     toast.success("Đã xuất file JSON!");
   };
 
-  const EditButton = ({ section }: { section: string }) => (
-    <Button
-      variant="ghost"
-      size="sm"
-      onClick={() => startEditing(section)}
-      className="ml-2"
-    >
-      <Pencil className="h-4 w-4" />
-    </Button>
-  );
+  const EditButton = ({ section }: { section: string }) => {
+    if (!isEditMode) return null;
+    return (
+      <Button
+        variant="ghost"
+        size="sm"
+        onClick={() => startEditing(section)}
+        className="ml-2"
+      >
+        <Pencil className="h-4 w-4" />
+      </Button>
+    );
+  };
 
   const EditActions = () => (
     <div className="flex gap-2">
