@@ -7,13 +7,20 @@ export type Role = 'admin' | 'editor' | 'viewer';
 export type Permission =
   // Dashboard
   | 'dashboard.access'
+  // Application Forms
+  | 'application.view'
+  | 'application.edit'
+  | 'application.verify'   // Admin only - verify content
+  | 'application.approve'  // Admin only - approve to editor
+  // Evaluation Tab
+  | 'evaluation.view'      // Admin & Editor only
+  // Chat Assistant
+  | 'chat.view'            // View assistant comments
+  | 'chat.interact'        // Full interaction with chatbot
   // Curriculum
   | 'curriculum.view'
   | 'curriculum.edit'
   | 'curriculum.delete'
-  // Chat Assistant
-  | 'chat.access'
-  | 'chat.full'
   // Admin Panel
   | 'admin.access'
   | 'admin.users'
@@ -24,14 +31,21 @@ export type Permission =
   | 'reports.edit';
 
 // Role to permissions mapping
+// Viewer: Can EDIT applications, NO chatbot, NO verify button, NO evaluation tab
+// Editor: Can VIEW applications (read-only), sees assistant comments, NO verify button, CAN see evaluation tab
+// Admin: Can VIEW applications, CAN verify, CAN approve to editor, full access
 export const ROLE_PERMISSIONS: Record<Role, Permission[]> = {
   admin: [
     'dashboard.access',
+    'application.view',
+    'application.verify',
+    'application.approve',
+    'evaluation.view',
+    'chat.view',
+    'chat.interact',
     'curriculum.view',
     'curriculum.edit',
     'curriculum.delete',
-    'chat.access',
-    'chat.full',
     'admin.access',
     'admin.users',
     'admin.settings',
@@ -41,19 +55,24 @@ export const ROLE_PERMISSIONS: Record<Role, Permission[]> = {
   ],
   editor: [
     'dashboard.access',
+    'application.view',      // View only, no edit
+    'evaluation.view',       // Can see evaluation tab
+    'chat.view',             // Can see assistant comments (read-only)
     'curriculum.view',
     'curriculum.edit',
-    'chat.access',
-    'chat.full',
     'reports.view',
     'reports.create',
     'reports.edit',
   ],
   viewer: [
     'dashboard.access',
+    'application.view',
+    'application.edit',      // Viewer can EDIT applications
     'curriculum.view',
-    'chat.access',
     'reports.view',
+    // NO chat.view - cannot see chatbot
+    // NO evaluation.view - cannot see evaluation tab
+    // NO application.verify - cannot verify
   ],
 };
 

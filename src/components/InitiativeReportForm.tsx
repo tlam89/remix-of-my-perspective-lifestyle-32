@@ -47,6 +47,8 @@ interface InitiativeFormState {
 
 interface InitiativeReportFormProps {
   onVerify?: (fieldName: string, content: string) => void;
+  readOnly?: boolean;       // Editor & Admin: view only
+  showVerifyButton?: boolean; // Only Admin can see verify button
 }
 
 const initialFormState: InitiativeFormState = {
@@ -74,7 +76,7 @@ const initialFormState: InitiativeFormState = {
   authorName: '',
 };
 
-export default function InitiativeReportForm({ onVerify }: InitiativeReportFormProps) {
+export default function InitiativeReportForm({ onVerify, readOnly = false, showVerifyButton = false }: InitiativeReportFormProps) {
   const [formData, setFormData] = useState<InitiativeFormState>(initialFormState);
 
   const handleInputChange = (field: keyof InitiativeFormState, value: string) => {
@@ -113,19 +115,22 @@ export default function InitiativeReportForm({ onVerify }: InitiativeReportFormP
     }
   };
 
-  const VerifyButton = ({ fieldName, content }: { fieldName: string; content: string }) => (
-    <Button
-      type="button"
-      variant="outline"
-      size="sm"
-      className="mt-2 gap-1 text-xs"
-      onClick={() => handleVerify(fieldName, content)}
-      disabled={!content.trim()}
-    >
-      <CheckCircle2 size={14} />
-      Kiểm tra
-    </Button>
-  );
+  const VerifyButton = ({ fieldName, content }: { fieldName: string; content: string }) => {
+    if (!showVerifyButton) return null;
+    return (
+      <Button
+        type="button"
+        variant="outline"
+        size="sm"
+        className="mt-2 gap-1 text-xs"
+        onClick={() => handleVerify(fieldName, content)}
+        disabled={!content.trim()}
+      >
+        <CheckCircle2 size={14} />
+        Kiểm tra
+      </Button>
+    );
+  };
 
   return (
     <Card className="border-border shadow-lg">
@@ -157,6 +162,7 @@ export default function InitiativeReportForm({ onVerify }: InitiativeReportFormP
               placeholder="Nhập tên quy trình, giải pháp..."
               value={formData.initiativeName}
               onChange={(e) => handleInputChange('initiativeName', e.target.value)}
+              disabled={readOnly}
             />
           </div>
           
@@ -166,6 +172,7 @@ export default function InitiativeReportForm({ onVerify }: InitiativeReportFormP
               placeholder="Ví dụ: Quản lý giáo dục, Cải cách hành chính..."
               value={formData.applicationField}
               onChange={(e) => handleInputChange('applicationField', e.target.value)}
+              disabled={readOnly}
             />
           </div>
           
@@ -176,6 +183,7 @@ export default function InitiativeReportForm({ onVerify }: InitiativeReportFormP
               placeholder="Giới thiệu vấn đề, khó khăn, bất cập hiện tại..."
               value={formData.introduction}
               onChange={(e) => handleInputChange('introduction', e.target.value)}
+              disabled={readOnly}
             />
             <VerifyButton fieldName="Mở đầu (Sự cần thiết)" content={formData.introduction} />
           </div>
@@ -197,6 +205,7 @@ export default function InitiativeReportForm({ onVerify }: InitiativeReportFormP
               className="min-h-24"
               value={formData.currentStatus}
               onChange={(e) => handleInputChange('currentStatus', e.target.value)}
+              disabled={readOnly}
             />
             <VerifyButton fieldName="Tình trạng trước khi có sáng kiến" content={formData.currentStatus} />
           </div>
@@ -210,6 +219,7 @@ export default function InitiativeReportForm({ onVerify }: InitiativeReportFormP
                 <Input
                   value={formData.purpose}
                   onChange={(e) => handleInputChange('purpose', e.target.value)}
+                  disabled={readOnly}
                 />
               </div>
               
@@ -220,6 +230,7 @@ export default function InitiativeReportForm({ onVerify }: InitiativeReportFormP
                   placeholder="Mô tả ngắn gọn, đầy đủ các bước..."
                   value={formData.implementationSteps}
                   onChange={(e) => handleInputChange('implementationSteps', e.target.value)}
+                  disabled={readOnly}
                 />
                 <VerifyButton fieldName="Các bước thực hiện giải pháp" content={formData.implementationSteps} />
               </div>
@@ -229,6 +240,7 @@ export default function InitiativeReportForm({ onVerify }: InitiativeReportFormP
                 <Input
                   value={formData.conditions}
                   onChange={(e) => handleInputChange('conditions', e.target.value)}
+                  disabled={readOnly}
                 />
               </div>
             </div>
@@ -238,14 +250,16 @@ export default function InitiativeReportForm({ onVerify }: InitiativeReportFormP
           <div className="mt-6">
             <div className="flex justify-between items-center mb-2">
               <label className="block text-sm font-bold text-foreground">Danh sách đơn vị/cá nhân áp dụng thử</label>
-              <Button
-                type="button"
-                onClick={addTrialUnit}
-                size="sm"
-                className="gap-1"
-              >
-                <Plus size={16} /> Thêm đơn vị
-              </Button>
+              {!readOnly && (
+                <Button
+                  type="button"
+                  onClick={addTrialUnit}
+                  size="sm"
+                  className="gap-1"
+                >
+                  <Plus size={16} /> Thêm đơn vị
+                </Button>
+              )}
             </div>
             
             <div className="overflow-x-auto border border-border rounded-lg">

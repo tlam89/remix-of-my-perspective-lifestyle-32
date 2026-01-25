@@ -47,6 +47,8 @@ interface ContributionFormState {
 
 interface ContributionConfirmationFormProps {
   onVerify?: (fieldName: string, content: string) => void;
+  readOnly?: boolean;       // Editor & Admin: view only
+  showVerifyButton?: boolean; // Only Admin can see verify button
 }
 
 const initialFormState: ContributionFormState = {
@@ -59,7 +61,7 @@ const initialFormState: ContributionFormState = {
   digitalSignatureConfirmed: false,
 };
 
-export default function ContributionConfirmationForm({ onVerify }: ContributionConfirmationFormProps) {
+export default function ContributionConfirmationForm({ onVerify, readOnly = false, showVerifyButton = false }: ContributionConfirmationFormProps) {
   const [formData, setFormData] = useState<ContributionFormState>(initialFormState);
   const [editingRow, setEditingRow] = useState<Participant | null>(null);
 
