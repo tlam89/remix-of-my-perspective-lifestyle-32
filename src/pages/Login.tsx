@@ -6,11 +6,10 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Alert, AlertDescription } from '@/components/ui/alert';
 import { Separator } from '@/components/ui/separator';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { LogIn, User, Shield, Eye, Edit, AlertCircle } from 'lucide-react';
+import { LogIn, Shield, Eye, Edit, AlertCircle } from 'lucide-react';
 
 export default function Login() {
   const [email, setEmail] = useState('');
@@ -19,29 +18,18 @@ export default function Login() {
   const [isLoading, setIsLoading] = useState(false);
   const [selectedRole, setSelectedRole] = useState<Role>('viewer');
   
-  const { login, setDemoUser } = useAuth();
+  const { setDemoUser } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
   
   const from = (location.state as { from?: { pathname: string } })?.from?.pathname || '/dashboard';
 
-  const handleLogin = async (e: React.FormEvent) => {
+  const handleLogin = (e: React.FormEvent) => {
     e.preventDefault();
     setError('');
     setIsLoading(true);
 
-    const result = await login(email, password);
-    
-    if (result.success) {
-      navigate(from, { replace: true });
-    } else {
-      setError(result.error || 'Đăng nhập thất bại');
-    }
-    
-    setIsLoading(false);
-  };
-
-  const handleDemoLogin = () => {
+    // Demo mode: sign in with selected role
     setDemoUser(selectedRole);
     navigate(from, { replace: true });
   };
@@ -64,119 +52,81 @@ export default function Login() {
         <div className="text-center mb-8">
           <h1 className="text-3xl font-bold text-foreground">Đăng nhập</h1>
           <p className="text-muted-foreground mt-2">
-            Chọn phương thức đăng nhập của bạn
+            Nhập thông tin tài khoản của bạn
           </p>
         </div>
 
-        <Tabs defaultValue="demo" className="w-full">
-          <TabsList className="grid w-full grid-cols-2">
-            <TabsTrigger value="demo">Demo Mode</TabsTrigger>
-            <TabsTrigger value="login">Đăng nhập thật</TabsTrigger>
-          </TabsList>
+        <Card>
+          <CardHeader>
+            <CardTitle className="flex items-center gap-2">
+              <LogIn className="h-5 w-5" />
+              Đăng nhập
+            </CardTitle>
+            <CardDescription>
+              Đăng nhập để truy cập hệ thống
+            </CardDescription>
+          </CardHeader>
+          <CardContent>
+            <form onSubmit={handleLogin} className="space-y-4">
+              <div className="space-y-2">
+                <Label htmlFor="email">Email</Label>
+                <Input
+                  id="email"
+                  type="email"
+                  placeholder="you@example.com"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  required
+                />
+              </div>
 
-          <TabsContent value="demo">
-            <Card>
-              <CardHeader>
-                <CardTitle className="flex items-center gap-2">
-                  <User className="h-5 w-5" />
-                  Chọn vai trò Demo
-                </CardTitle>
-                <CardDescription>
-                  Chọn một vai trò từ danh sách để thử nghiệm
-                </CardDescription>
-              </CardHeader>
-              <CardContent className="space-y-4">
-                <div className="space-y-2">
-                  <Label htmlFor="role-select">Vai trò</Label>
-                  <Select value={selectedRole} onValueChange={(value: Role) => setSelectedRole(value)}>
-                    <SelectTrigger id="role-select" className="w-full">
-                      <SelectValue placeholder="Chọn vai trò" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      {(['admin', 'editor', 'viewer'] as Role[]).map((role) => (
-                        <SelectItem key={role} value={role}>
-                          <div className="flex items-center gap-2">
-                            {roleIcons[role]}
-                            <span>{ROLE_DISPLAY_NAMES[role]}</span>
-                          </div>
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
-                </div>
+              <div className="space-y-2">
+                <Label htmlFor="password">Mật khẩu</Label>
+                <Input
+                  id="password"
+                  type="password"
+                  placeholder="••••••••"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  required
+                />
+              </div>
 
-                {selectedRole && (
-                  <div className="p-3 rounded-lg bg-muted/50 border">
-                    <div className="flex items-center gap-2 mb-1">
-                      {roleIcons[selectedRole]}
-                      <span className="font-medium">{ROLE_DISPLAY_NAMES[selectedRole]}</span>
-                    </div>
-                    <p className="text-sm text-muted-foreground">
-                      {roleDescriptions[selectedRole]}
-                    </p>
-                  </div>
-                )}
+              <div className="space-y-2">
+                <Label htmlFor="role-select">Vai trò</Label>
+                <Select value={selectedRole} onValueChange={(value: Role) => setSelectedRole(value)}>
+                  <SelectTrigger id="role-select" className="w-full">
+                    <SelectValue placeholder="Chọn vai trò" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {(['admin', 'editor', 'viewer'] as Role[]).map((role) => (
+                      <SelectItem key={role} value={role}>
+                        <div className="flex items-center gap-2">
+                          {roleIcons[role]}
+                          <span>{ROLE_DISPLAY_NAMES[role]}</span>
+                        </div>
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+                <p className="text-xs text-muted-foreground mt-1">
+                  {roleDescriptions[selectedRole]}
+                </p>
+              </div>
 
-                <Button className="w-full" onClick={handleDemoLogin}>
-                  <LogIn className="h-4 w-4 mr-2" />
-                  Đăng nhập Demo
-                </Button>
-              </CardContent>
-            </Card>
-          </TabsContent>
+              {error && (
+                <Alert variant="destructive">
+                  <AlertCircle className="h-4 w-4" />
+                  <AlertDescription>{error}</AlertDescription>
+                </Alert>
+              )}
 
-          <TabsContent value="login">
-            <Card>
-              <CardHeader>
-                <CardTitle className="flex items-center gap-2">
-                  <LogIn className="h-5 w-5" />
-                  Đăng nhập
-                </CardTitle>
-                <CardDescription>
-                  Nhập thông tin tài khoản của bạn
-                </CardDescription>
-              </CardHeader>
-              <CardContent>
-                <form onSubmit={handleLogin} className="space-y-4">
-                  <div className="space-y-2">
-                    <Label htmlFor="email">Email</Label>
-                    <Input
-                      id="email"
-                      type="email"
-                      placeholder="you@example.com"
-                      value={email}
-                      onChange={(e) => setEmail(e.target.value)}
-                      required
-                    />
-                  </div>
-
-                  <div className="space-y-2">
-                    <Label htmlFor="password">Mật khẩu</Label>
-                    <Input
-                      id="password"
-                      type="password"
-                      placeholder="••••••••"
-                      value={password}
-                      onChange={(e) => setPassword(e.target.value)}
-                      required
-                    />
-                  </div>
-
-                  {error && (
-                    <Alert variant="destructive">
-                      <AlertCircle className="h-4 w-4" />
-                      <AlertDescription>{error}</AlertDescription>
-                    </Alert>
-                  )}
-
-                  <Button type="submit" className="w-full" disabled={isLoading}>
-                    {isLoading ? 'Đang đăng nhập...' : 'Đăng nhập'}
-                  </Button>
-                </form>
-              </CardContent>
-            </Card>
-          </TabsContent>
-        </Tabs>
+              <Button type="submit" className="w-full" disabled={isLoading}>
+                {isLoading ? 'Đang đăng nhập...' : 'Đăng nhập'}
+              </Button>
+            </form>
+          </CardContent>
+        </Card>
 
         <Separator className="my-6" />
 
