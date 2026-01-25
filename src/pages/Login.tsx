@@ -8,8 +8,8 @@ import { Label } from '@/components/ui/label';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Alert, AlertDescription } from '@/components/ui/alert';
-import { Badge } from '@/components/ui/badge';
 import { Separator } from '@/components/ui/separator';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { LogIn, User, Shield, Eye, Edit, AlertCircle } from 'lucide-react';
 
 export default function Login() {
@@ -17,6 +17,7 @@ export default function Login() {
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+  const [selectedRole, setSelectedRole] = useState<Role>('viewer');
   
   const { login, setDemoUser } = useAuth();
   const navigate = useNavigate();
@@ -40,8 +41,8 @@ export default function Login() {
     setIsLoading(false);
   };
 
-  const handleDemoLogin = (role: Role) => {
-    setDemoUser(role);
+  const handleDemoLogin = () => {
+    setDemoUser(selectedRole);
     navigate(from, { replace: true });
   };
 
@@ -52,9 +53,9 @@ export default function Login() {
   };
 
   const roleDescriptions: Record<Role, string> = {
-    admin: 'Toàn quyền: quản lý người dùng, cài đặt, nội dung',
-    editor: 'Tạo và chỉnh sửa nội dung, báo cáo',
-    viewer: 'Chỉ xem nội dung, không chỉnh sửa',
+    admin: 'Xem đơn, nút Kiểm tra, tương tác chatbot, quản lý phân công',
+    editor: 'Xem đơn (chỉ đọc), xem bình luận chatbot, truy cập Phiếu đánh giá',
+    viewer: 'Chỉnh sửa đơn, không có chatbot, không có nút Kiểm tra',
   };
 
   return (
@@ -81,35 +82,45 @@ export default function Login() {
                   Chọn vai trò Demo
                 </CardTitle>
                 <CardDescription>
-                  Đăng nhập nhanh để thử nghiệm các vai trò khác nhau
+                  Chọn một vai trò từ danh sách để thử nghiệm
                 </CardDescription>
               </CardHeader>
-              <CardContent className="space-y-3">
-                {(['admin', 'editor', 'viewer'] as Role[]).map((role) => (
-                  <Button
-                    key={role}
-                    variant="outline"
-                    className="w-full justify-start h-auto py-4"
-                    onClick={() => handleDemoLogin(role)}
-                  >
-                    <div className="flex items-start gap-3 w-full">
-                      <div className="p-2 rounded-lg bg-primary/10">
-                        {roleIcons[role]}
-                      </div>
-                      <div className="flex-1 text-left">
-                        <div className="flex items-center gap-2">
-                          <span className="font-medium">{ROLE_DISPLAY_NAMES[role]}</span>
-                          <Badge variant="secondary" className="text-xs">
-                            {role}
-                          </Badge>
-                        </div>
-                        <p className="text-sm text-muted-foreground mt-1">
-                          {roleDescriptions[role]}
-                        </p>
-                      </div>
+              <CardContent className="space-y-4">
+                <div className="space-y-2">
+                  <Label htmlFor="role-select">Vai trò</Label>
+                  <Select value={selectedRole} onValueChange={(value: Role) => setSelectedRole(value)}>
+                    <SelectTrigger id="role-select" className="w-full">
+                      <SelectValue placeholder="Chọn vai trò" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {(['admin', 'editor', 'viewer'] as Role[]).map((role) => (
+                        <SelectItem key={role} value={role}>
+                          <div className="flex items-center gap-2">
+                            {roleIcons[role]}
+                            <span>{ROLE_DISPLAY_NAMES[role]}</span>
+                          </div>
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                </div>
+
+                {selectedRole && (
+                  <div className="p-3 rounded-lg bg-muted/50 border">
+                    <div className="flex items-center gap-2 mb-1">
+                      {roleIcons[selectedRole]}
+                      <span className="font-medium">{ROLE_DISPLAY_NAMES[selectedRole]}</span>
                     </div>
-                  </Button>
-                ))}
+                    <p className="text-sm text-muted-foreground">
+                      {roleDescriptions[selectedRole]}
+                    </p>
+                  </div>
+                )}
+
+                <Button className="w-full" onClick={handleDemoLogin}>
+                  <LogIn className="h-4 w-4 mr-2" />
+                  Đăng nhập Demo
+                </Button>
               </CardContent>
             </Card>
           </TabsContent>
