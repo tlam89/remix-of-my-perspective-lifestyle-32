@@ -8,9 +8,11 @@ import {
   Bell,
   HelpCircle,
   LogOut,
-  ChevronDown
+  ChevronDown,
+  BookOpen,
+  Shield
 } from "lucide-react";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import {
   Sidebar,
   SidebarContent,
@@ -31,10 +33,13 @@ import {
   CollapsibleTrigger,
 } from "@/components/ui/collapsible";
 import { cn } from "@/lib/utils";
+import { useAuth } from "@/contexts/AuthContext";
+import { PermissionGate } from "@/components/auth/PermissionGate";
 import logo from "@/assets/logo.png";
 
 const mainMenuItems = [
   { title: "Dashboard", url: "/dashboard", icon: LayoutDashboard },
+  { title: "Curriculum", url: "/dashboard/curriculum", icon: BookOpen },
   { title: "Analytics", url: "/dashboard/analytics", icon: BarChart3 },
   { title: "Documents", url: "/dashboard/documents", icon: FileText },
 ];
@@ -52,10 +57,17 @@ const systemItems = [
 
 export function DashboardSidebar() {
   const location = useLocation();
+  const navigate = useNavigate();
   const { state } = useSidebar();
+  const { logout, hasPermission } = useAuth();
   const isCollapsed = state === "collapsed";
 
   const isActive = (url: string) => location.pathname === url;
+
+  const handleLogout = async () => {
+    await logout();
+    navigate('/login');
+  };
 
   const MenuItem = ({ item }: { item: { title: string; url: string; icon: React.ComponentType<{ className?: string }> } }) => (
     <SidebarMenuItem>
@@ -103,25 +115,32 @@ export function DashboardSidebar() {
 
         <SidebarSeparator />
 
-        <SidebarGroup>
-          <Collapsible defaultOpen className="group/collapsible">
-            <SidebarGroupLabel asChild>
-              <CollapsibleTrigger className="flex w-full items-center justify-between">
-                Management
-                <ChevronDown className="h-4 w-4 transition-transform group-data-[state=open]/collapsible:rotate-180" />
-              </CollapsibleTrigger>
-            </SidebarGroupLabel>
-            <CollapsibleContent>
-              <SidebarGroupContent>
-                <SidebarMenu>
-                  {managementItems.map((item) => (
-                    <MenuItem key={item.title} item={item} />
-                  ))}
-                </SidebarMenu>
-              </SidebarGroupContent>
-            </CollapsibleContent>
-          </Collapsible>
-        </SidebarGroup>
+        <PermissionGate permission="admin.access">
+          <SidebarGroup>
+            <Collapsible defaultOpen className="group/collapsible">
+              <SidebarGroupLabel asChild>
+                <CollapsibleTrigger className="flex w-full items-center justify-between">
+                  <span className="flex items-center gap-2">
+                    <Shield className="h-4 w-4" />
+                    Management
+                  </span>
+                  <ChevronDown className="h-4 w-4 transition-transform group-data-[state=open]/collapsible:rotate-180" />
+                </CollapsibleTrigger>
+              </SidebarGroupLabel>
+              <CollapsibleContent>
+                <SidebarGroupContent>
+                  <SidebarMenu>
+                    {managementItems.map((item) => (
+                      <MenuItem key={item.title} item={item} />
+                    ))}
+                  </SidebarMenu>
+                </SidebarGroupContent>
+              </CollapsibleContent>
+            </Collapsible>
+          </SidebarGroup>
+
+          <SidebarSeparator />
+        </PermissionGate>
 
         <SidebarSeparator />
 
@@ -140,11 +159,13 @@ export function DashboardSidebar() {
       <SidebarFooter className="border-t border-sidebar-border p-2">
         <SidebarMenu>
           <SidebarMenuItem>
-            <SidebarMenuButton asChild tooltip="Sign Out">
-              <Link to="/" className="text-destructive hover:text-destructive">
-                <LogOut className="h-4 w-4" />
-                <span>Sign Out</span>
-              </Link>
+            <SidebarMenuButton 
+              onClick={handleLogout}
+              tooltip="Sign Out"
+              className="text-destructive hover:text-destructive cursor-pointer"
+            >
+              <LogOut className="h-4 w-4" />
+              <span>Sign Out</span>
             </SidebarMenuButton>
           </SidebarMenuItem>
         </SidebarMenu>
