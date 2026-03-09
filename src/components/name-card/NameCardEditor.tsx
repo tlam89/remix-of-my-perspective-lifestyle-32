@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef, useCallback } from "react";
+import { ScrollArea } from "@/components/ui/scroll-area";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Upload, Download, Plus, Trash2, RotateCcw, FileSpreadsheet } from "lucide-react";
@@ -35,6 +36,8 @@ export default function NameCardEditor() {
   const previewCanvasRef = useRef<HTMLCanvasElement>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const listFileInputRef = useRef<HTMLInputElement>(null);
+  const canvasContainerRef = useRef<HTMLDivElement>(null);
+  const [canvasHeight, setCanvasHeight] = useState<number | null>(null);
 
   const selectedPerson = people.find((p) => p.id === selectedId);
 
@@ -148,6 +151,18 @@ export default function NameCardEditor() {
   useEffect(() => { localStorage.setItem(STORAGE_KEYS.config, JSON.stringify(config)); }, [config]);
   useEffect(() => { localStorage.setItem(STORAGE_KEYS.selectedId, JSON.stringify(selectedId)); }, [selectedId]);
 
+  // Sync list height with canvas height
+  useEffect(() => {
+    const container = canvasContainerRef.current;
+    if (!container) return;
+    const observer = new ResizeObserver(() => {
+      const canvas = container.querySelector("canvas");
+      if (canvas) setCanvasHeight(canvas.offsetHeight);
+    });
+    observer.observe(container);
+    return () => observer.disconnect();
+  }, [templateImage]);
+
   // Keyboard navigation
   useEffect(() => {
     const handler = (e: KeyboardEvent) => {
@@ -217,13 +232,16 @@ export default function NameCardEditor() {
                   {people.length} thẻ · Dùng ↑↓ để chuyển
                 </p>
               </div>
-              <div className="flex-1 overflow-y-auto p-1.5 max-h-[300px] lg:max-h-none">
+              <ScrollArea
+                className="flex-1 p-1.5"
+                style={canvasHeight ? { maxHeight: `${canvasHeight}px` } : { maxHeight: "300px" }}
+              >
                 <CardList
                   people={people}
                   selectedId={selectedId}
                   onSelect={setSelectedId}
                 />
-              </div>
+              </ScrollArea>
               <div className="p-2.5 border-t border-border space-y-2">
                 <Button
                   variant="outline"
@@ -274,14 +292,16 @@ export default function NameCardEditor() {
                 </span>
               </div>
 
-              {selectedPerson && (
-                <CardCanvas
-                  templateImage={templateImage}
-                  person={selectedPerson}
-                  config={config}
-                  canvasRef={previewCanvasRef}
-                />
-              )}
+              <div ref={canvasContainerRef}>
+                {selectedPerson && (
+                  <CardCanvas
+                    templateImage={templateImage}
+                    person={selectedPerson}
+                    config={config}
+                    canvasRef={previewCanvasRef}
+                  />
+                )}
+              </div>
 
               <div className="mt-4 flex gap-2 flex-wrap justify-center">
                 <Button size="sm" onClick={exportSingleCard}>
