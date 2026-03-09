@@ -51,7 +51,7 @@ export function renderCardToCtx(
 
   const fontRole = `bold ${config.fontSizeRole}px ${config.fontFamilyRole}`;
   const fontName = `bold ${config.fontSizeName}px ${config.fontFamilyName}`;
-  const fontPos = `italic ${config.fontSizePos}px ${config.fontFamilyPos}`;
+  const fontPos = `${config.fontSizePos}px ${config.fontFamilyPos}`;
 
   const h1 = measureTextHeight(ctx, person.chucDanh, fontRole);
   const h2 = measureTextHeight(ctx, person.name, fontName);
