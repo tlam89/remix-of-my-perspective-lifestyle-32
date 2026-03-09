@@ -1,11 +1,13 @@
 import { useState, useEffect, useRef, useCallback } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Upload, Download, Plus, Trash2, RotateCcw } from "lucide-react";
+import { Upload, Download, Plus, Trash2, RotateCcw, FileSpreadsheet } from "lucide-react";
+import { toast } from "sonner";
 import CardCanvas from "./CardCanvas";
 import CardList from "./CardList";
 import ControlPanel from "./ControlPanel";
 import { renderCardToCtx } from "./canvas-utils";
+import { parseNameListFile } from "./file-parser";
 import { DEFAULT_CONFIG, INITIAL_PEOPLE } from "./constants";
 import type { Person, CardConfig } from "./types";
 
@@ -32,6 +34,7 @@ export default function NameCardEditor() {
   const [isExporting, setIsExporting] = useState(false);
   const previewCanvasRef = useRef<HTMLCanvasElement>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const listFileInputRef = useRef<HTMLInputElement>(null);
 
   const selectedPerson = people.find((p) => p.id === selectedId);
 
@@ -45,6 +48,30 @@ export default function NameCardEditor() {
       img.src = URL.createObjectURL(file);
     },
     []
+  );
+
+  // Import people list from CSV/Excel
+  const handleListFileUpload = useCallback(
+    async (e: React.ChangeEvent<HTMLInputElement>) => {
+      const file = e.target.files?.[0];
+      if (!file) return;
+      try {
+        const maxId = people.length > 0 ? Math.max(...people.map((p) => p.id)) : 0;
+        const imported = await parseNameListFile(file, maxId + 1);
+        if (imported.length === 0) {
+          toast.error("File không chứa dữ liệu hợp lệ.");
+          return;
+        }
+        setPeople(imported);
+        setSelectedId(imported[0].id);
+        toast.success(`Đã nhập ${imported.length} thẻ tên từ file.`);
+      } catch (err) {
+        toast.error(err instanceof Error ? err.message : "Lỗi khi đọc file.");
+      } finally {
+        e.target.value = "";
+      }
+    },
+    [people]
   );
 
   // Update a person
@@ -197,26 +224,44 @@ export default function NameCardEditor() {
                   onSelect={setSelectedId}
                 />
               </div>
-              <div className="p-2.5 border-t border-border flex gap-2">
+              <div className="p-2.5 border-t border-border space-y-2">
                 <Button
-                  variant="secondary"
+                  variant="outline"
                   size="sm"
-                  className="flex-1"
-                  onClick={addNewCard}
+                  className="w-full"
+                  onClick={() => listFileInputRef.current?.click()}
                 >
-                  <Plus className="w-4 h-4 mr-1" />
-                  Thêm
+                  <FileSpreadsheet className="w-4 h-4 mr-1" />
+                  Nhập từ Excel/CSV
                 </Button>
-                <Button
-                  variant="destructive"
-                  size="sm"
-                  className="flex-1"
-                  onClick={deleteCard}
-                  disabled={people.length <= 1}
-                >
-                  <Trash2 className="w-4 h-4 mr-1" />
-                  Xóa
-                </Button>
+                <input
+                  ref={listFileInputRef}
+                  type="file"
+                  accept=".csv,.xlsx,.xls"
+                  onChange={handleListFileUpload}
+                  className="hidden"
+                />
+                <div className="flex gap-2">
+                  <Button
+                    variant="secondary"
+                    size="sm"
+                    className="flex-1"
+                    onClick={addNewCard}
+                  >
+                    <Plus className="w-4 h-4 mr-1" />
+                    Thêm
+                  </Button>
+                  <Button
+                    variant="destructive"
+                    size="sm"
+                    className="flex-1"
+                    onClick={deleteCard}
+                    disabled={people.length <= 1}
+                  >
+                    <Trash2 className="w-4 h-4 mr-1" />
+                    Xóa
+                  </Button>
+                </div>
               </div>
             </aside>
 
