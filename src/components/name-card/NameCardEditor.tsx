@@ -232,13 +232,16 @@ export default function NameCardEditor() {
                   {people.length} thẻ · Dùng ↑↓ để chuyển
                 </p>
               </div>
-              <div className="flex-1 overflow-y-auto p-1.5 max-h-[300px] lg:max-h-none">
+              <ScrollArea
+                className="flex-1 p-1.5"
+                style={canvasHeight ? { maxHeight: `${canvasHeight}px` } : { maxHeight: "300px" }}
+              >
                 <CardList
                   people={people}
                   selectedId={selectedId}
                   onSelect={setSelectedId}
                 />
-              </div>
+              </ScrollArea>
               <div className="p-2.5 border-t border-border space-y-2">
                 <Button
                   variant="outline"
