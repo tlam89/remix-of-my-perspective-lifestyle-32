@@ -9,10 +9,25 @@ import { renderCardToCtx } from "./canvas-utils";
 import { DEFAULT_CONFIG, INITIAL_PEOPLE } from "./constants";
 import type { Person, CardConfig } from "./types";
 
+const STORAGE_KEYS = {
+  people: "namecard-people",
+  config: "namecard-config",
+  selectedId: "namecard-selectedId",
+} as const;
+
+function loadFromStorage<T>(key: string, fallback: T): T {
+  try {
+    const raw = localStorage.getItem(key);
+    return raw ? JSON.parse(raw) : fallback;
+  } catch {
+    return fallback;
+  }
+}
+
 export default function NameCardEditor() {
-  const [people, setPeople] = useState<Person[]>(INITIAL_PEOPLE);
-  const [selectedId, setSelectedId] = useState(1);
-  const [config, setConfig] = useState<CardConfig>(DEFAULT_CONFIG);
+  const [people, setPeople] = useState<Person[]>(() => loadFromStorage(STORAGE_KEYS.people, INITIAL_PEOPLE));
+  const [selectedId, setSelectedId] = useState(() => loadFromStorage(STORAGE_KEYS.selectedId, 1));
+  const [config, setConfig] = useState<CardConfig>(() => loadFromStorage(STORAGE_KEYS.config, DEFAULT_CONFIG));
   const [templateImage, setTemplateImage] = useState<HTMLImageElement | null>(null);
   const [isExporting, setIsExporting] = useState(false);
   const previewCanvasRef = useRef<HTMLCanvasElement>(null);
@@ -100,6 +115,11 @@ export default function NameCardEditor() {
     setPeople(remaining);
     setSelectedId(remaining[0].id);
   }, [people, selectedId]);
+
+  // Persist to localStorage
+  useEffect(() => { localStorage.setItem(STORAGE_KEYS.people, JSON.stringify(people)); }, [people]);
+  useEffect(() => { localStorage.setItem(STORAGE_KEYS.config, JSON.stringify(config)); }, [config]);
+  useEffect(() => { localStorage.setItem(STORAGE_KEYS.selectedId, JSON.stringify(selectedId)); }, [selectedId]);
 
   // Keyboard navigation
   useEffect(() => {
