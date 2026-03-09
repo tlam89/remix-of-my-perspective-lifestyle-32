@@ -1,6 +1,7 @@
 import Header from "@/components/Header";
 import ArticleCard from "@/components/ArticleCard";
 import { articles } from "@/data/articles";
+import NameCardEditor from "@/components/name-card/NameCardEditor";
 
 const Growth = () => {
   const growthArticles = articles.filter(article => 
