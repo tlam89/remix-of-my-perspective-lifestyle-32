@@ -35,6 +35,11 @@ const Growth = () => {
           </div>
         </section>
 
+        {/* Name Card Editor */}
+        <section className="mt-16">
+          <NameCardEditor />
+        </section>
+
         {/* Growth Philosophy */}
         <section className="mt-16 rounded-2xl bg-card p-8 md:p-12">
           <div className="max-w-4xl mx-auto">
