@@ -224,26 +224,44 @@ export default function NameCardEditor() {
                   onSelect={setSelectedId}
                 />
               </div>
-              <div className="p-2.5 border-t border-border flex gap-2">
+              <div className="p-2.5 border-t border-border space-y-2">
                 <Button
-                  variant="secondary"
+                  variant="outline"
                   size="sm"
-                  className="flex-1"
-                  onClick={addNewCard}
+                  className="w-full"
+                  onClick={() => listFileInputRef.current?.click()}
                 >
-                  <Plus className="w-4 h-4 mr-1" />
-                  Thêm
+                  <FileSpreadsheet className="w-4 h-4 mr-1" />
+                  Nhập từ Excel/CSV
                 </Button>
-                <Button
-                  variant="destructive"
-                  size="sm"
-                  className="flex-1"
-                  onClick={deleteCard}
-                  disabled={people.length <= 1}
-                >
-                  <Trash2 className="w-4 h-4 mr-1" />
-                  Xóa
-                </Button>
+                <input
+                  ref={listFileInputRef}
+                  type="file"
+                  accept=".csv,.xlsx,.xls"
+                  onChange={handleListFileUpload}
+                  className="hidden"
+                />
+                <div className="flex gap-2">
+                  <Button
+                    variant="secondary"
+                    size="sm"
+                    className="flex-1"
+                    onClick={addNewCard}
+                  >
+                    <Plus className="w-4 h-4 mr-1" />
+                    Thêm
+                  </Button>
+                  <Button
+                    variant="destructive"
+                    size="sm"
+                    className="flex-1"
+                    onClick={deleteCard}
+                    disabled={people.length <= 1}
+                  >
+                    <Trash2 className="w-4 h-4 mr-1" />
+                    Xóa
+                  </Button>
+                </div>
               </div>
             </aside>
 
