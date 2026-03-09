@@ -116,6 +116,11 @@ export default function NameCardEditor() {
     setSelectedId(remaining[0].id);
   }, [people, selectedId]);
 
+  // Persist to localStorage
+  useEffect(() => { localStorage.setItem(STORAGE_KEYS.people, JSON.stringify(people)); }, [people]);
+  useEffect(() => { localStorage.setItem(STORAGE_KEYS.config, JSON.stringify(config)); }, [config]);
+  useEffect(() => { localStorage.setItem(STORAGE_KEYS.selectedId, JSON.stringify(selectedId)); }, [selectedId]);
+
   // Keyboard navigation
   useEffect(() => {
     const handler = (e: KeyboardEvent) => {
