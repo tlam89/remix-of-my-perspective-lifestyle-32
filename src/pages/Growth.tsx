@@ -1,6 +1,7 @@
 import Header from "@/components/Header";
 import ArticleCard from "@/components/ArticleCard";
 import { articles } from "@/data/articles";
+import NameCardEditor from "@/components/name-card/NameCardEditor";
 
 const Growth = () => {
   const growthArticles = articles.filter(article => 
@@ -32,6 +33,11 @@ const Growth = () => {
               </div>
             ))}
           </div>
+        </section>
+
+        {/* Name Card Editor */}
+        <section className="mt-16">
+          <NameCardEditor />
         </section>
 
         {/* Growth Philosophy */}
