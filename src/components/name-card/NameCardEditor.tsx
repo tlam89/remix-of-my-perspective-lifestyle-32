@@ -1,11 +1,13 @@
 import { useState, useEffect, useRef, useCallback } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Upload, Download, Plus, Trash2, RotateCcw } from "lucide-react";
+import { Upload, Download, Plus, Trash2, RotateCcw, FileSpreadsheet } from "lucide-react";
+import { toast } from "sonner";
 import CardCanvas from "./CardCanvas";
 import CardList from "./CardList";
 import ControlPanel from "./ControlPanel";
 import { renderCardToCtx } from "./canvas-utils";
+import { parseNameListFile } from "./file-parser";
 import { DEFAULT_CONFIG, INITIAL_PEOPLE } from "./constants";
 import type { Person, CardConfig } from "./types";
 
