@@ -36,6 +36,8 @@ export default function NameCardEditor() {
   const previewCanvasRef = useRef<HTMLCanvasElement>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const listFileInputRef = useRef<HTMLInputElement>(null);
+  const canvasContainerRef = useRef<HTMLDivElement>(null);
+  const [canvasHeight, setCanvasHeight] = useState<number | null>(null);
 
   const selectedPerson = people.find((p) => p.id === selectedId);
 
