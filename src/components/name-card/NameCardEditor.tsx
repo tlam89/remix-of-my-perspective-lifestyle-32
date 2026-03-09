@@ -151,6 +151,18 @@ export default function NameCardEditor() {
   useEffect(() => { localStorage.setItem(STORAGE_KEYS.config, JSON.stringify(config)); }, [config]);
   useEffect(() => { localStorage.setItem(STORAGE_KEYS.selectedId, JSON.stringify(selectedId)); }, [selectedId]);
 
+  // Sync list height with canvas height
+  useEffect(() => {
+    const container = canvasContainerRef.current;
+    if (!container) return;
+    const observer = new ResizeObserver(() => {
+      const canvas = container.querySelector("canvas");
+      if (canvas) setCanvasHeight(canvas.offsetHeight);
+    });
+    observer.observe(container);
+    return () => observer.disconnect();
+  }, [templateImage]);
+
   // Keyboard navigation
   useEffect(() => {
     const handler = (e: KeyboardEvent) => {
