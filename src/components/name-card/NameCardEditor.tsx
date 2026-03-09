@@ -50,6 +50,30 @@ export default function NameCardEditor() {
     []
   );
 
+  // Import people list from CSV/Excel
+  const handleListFileUpload = useCallback(
+    async (e: React.ChangeEvent<HTMLInputElement>) => {
+      const file = e.target.files?.[0];
+      if (!file) return;
+      try {
+        const maxId = people.length > 0 ? Math.max(...people.map((p) => p.id)) : 0;
+        const imported = await parseNameListFile(file, maxId + 1);
+        if (imported.length === 0) {
+          toast.error("File không chứa dữ liệu hợp lệ.");
+          return;
+        }
+        setPeople(imported);
+        setSelectedId(imported[0].id);
+        toast.success(`Đã nhập ${imported.length} thẻ tên từ file.`);
+      } catch (err) {
+        toast.error(err instanceof Error ? err.message : "Lỗi khi đọc file.");
+      } finally {
+        e.target.value = "";
+      }
+    },
+    [people]
+  );
+
   // Update a person
   const handlePersonChange = useCallback((updated: Person) => {
     setPeople((prev) => prev.map((p) => (p.id === updated.id ? updated : p)));
