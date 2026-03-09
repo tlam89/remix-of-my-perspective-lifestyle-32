@@ -292,14 +292,16 @@ export default function NameCardEditor() {
                 </span>
               </div>
 
-              {selectedPerson && (
-                <CardCanvas
-                  templateImage={templateImage}
-                  person={selectedPerson}
-                  config={config}
-                  canvasRef={previewCanvasRef}
-                />
-              )}
+              <div ref={canvasContainerRef}>
+                {selectedPerson && (
+                  <CardCanvas
+                    templateImage={templateImage}
+                    person={selectedPerson}
+                    config={config}
+                    canvasRef={previewCanvasRef}
+                  />
+                )}
+              </div>
 
               <div className="mt-4 flex gap-2 flex-wrap justify-center">
                 <Button size="sm" onClick={exportSingleCard}>
