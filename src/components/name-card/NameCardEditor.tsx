@@ -34,6 +34,7 @@ export default function NameCardEditor() {
   const [config, setConfig] = useState<CardConfig>(() => loadFromStorage(STORAGE_KEYS.config, DEFAULT_CONFIG));
   const [templateImage, setTemplateImage] = useState<HTMLImageElement | null>(null);
   const [isExporting, setIsExporting] = useState(false);
+  const fontsReady = useGoogleFonts();
   const previewCanvasRef = useRef<HTMLCanvasElement>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const listFileInputRef = useRef<HTMLInputElement>(null);
