@@ -102,6 +102,14 @@ export default function NameCardEditor() {
     setIsExporting(true);
 
     try {
+      // Ensure fonts are loaded before batch export
+      const fontsToLoad = [
+        `bold ${config.fontSizeRole}px ${config.fontFamilyRole}`,
+        `bold ${config.fontSizeName}px ${config.fontFamilyName}`,
+        `${config.fontSizePos}px ${config.fontFamilyPos}`,
+      ];
+      await Promise.all(fontsToLoad.map((f) => document.fonts.load(f, "Quốc")));
+
       const canvas = document.createElement("canvas");
       const ctx = canvas.getContext("2d");
       if (!ctx) return;
