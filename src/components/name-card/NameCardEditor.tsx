@@ -10,6 +10,7 @@ import ControlPanel from "./ControlPanel";
 import { renderCardToCtx } from "./canvas-utils";
 import { parseNameListFile } from "./file-parser";
 import { DEFAULT_CONFIG, INITIAL_PEOPLE } from "./constants";
+import { useGoogleFonts } from "./useGoogleFonts";
 import type { Person, CardConfig } from "./types";
 
 const STORAGE_KEYS = {
@@ -33,6 +34,7 @@ export default function NameCardEditor() {
   const [config, setConfig] = useState<CardConfig>(() => loadFromStorage(STORAGE_KEYS.config, DEFAULT_CONFIG));
   const [templateImage, setTemplateImage] = useState<HTMLImageElement | null>(null);
   const [isExporting, setIsExporting] = useState(false);
+  const fontsReady = useGoogleFonts();
   const previewCanvasRef = useRef<HTMLCanvasElement>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const listFileInputRef = useRef<HTMLInputElement>(null);
@@ -307,6 +309,7 @@ export default function NameCardEditor() {
                     person={selectedPerson}
                     config={config}
                     canvasRef={previewCanvasRef}
+                    fontsReady={fontsReady}
                   />
                 )}
               </div>
