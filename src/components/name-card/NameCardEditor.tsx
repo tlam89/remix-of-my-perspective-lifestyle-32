@@ -10,6 +10,7 @@ import ControlPanel from "./ControlPanel";
 import { renderCardToCtx } from "./canvas-utils";
 import { parseNameListFile } from "./file-parser";
 import { DEFAULT_CONFIG, INITIAL_PEOPLE } from "./constants";
+import { useGoogleFonts } from "./useGoogleFonts";
 import type { Person, CardConfig } from "./types";
 
 const STORAGE_KEYS = {
