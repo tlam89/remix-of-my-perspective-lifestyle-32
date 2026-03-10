@@ -11,9 +11,9 @@ export const DEFAULT_CONFIG: CardConfig = {
   fontSizeName: 43,
   fontSizePos: 43,
   textColor: "#f9b342",
-  fontFamilyRole: "'Roboto', Helvetica, Arial, sans-serif",
-  fontFamilyName: "'Roboto', Helvetica, Arial, sans-serif",
-  fontFamilyPos: "'Roboto', Helvetica, Arial, sans-serif",
+  fontFamilyRole: "'Be Vietnam Pro', 'Roboto', Helvetica, Arial, sans-serif",
+  fontFamilyName: "'Noto Serif', 'Roboto', Georgia, serif",
+  fontFamilyPos: "'Noto Serif', 'Roboto', Georgia, serif",
 };
 
 export const INITIAL_PEOPLE: Person[] = [
