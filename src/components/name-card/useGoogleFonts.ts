@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 
 const GOOGLE_FONTS_URL =
-  "https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Noto+Serif:ital,wght@0,400;0,700;1,400;1,700&display=swap";
+  "https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Noto+Serif:ital,wght@0,400;0,700;1,400;1,700&display=swap&subset=vietnamese";
 
 export function useGoogleFonts(url: string = GOOGLE_FONTS_URL): boolean {
   const [fontsReady, setFontsReady] = useState(false);
