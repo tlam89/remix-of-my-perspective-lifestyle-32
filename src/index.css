@@ -6,6 +6,12 @@
 All colors MUST be HSL.
 */
 
+* {
+  font-feature-settings: "kern" 1;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+}
+
 @layer base {
   :root {
     /* Warm, sophisticated palette inspired by the design */
