@@ -9,6 +9,7 @@ export function drawCenteredText(
   color: string,
   canvasWidth: number
 ): number {
+  const normalizedText = text.normalize("NFC");
   ctx.font = font;
   ctx.fillStyle = color;
   ctx.textBaseline = "top";
