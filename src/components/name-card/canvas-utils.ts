@@ -14,9 +14,9 @@ export function drawCenteredText(
   ctx.fillStyle = color;
   ctx.textBaseline = "top";
   (ctx as any).letterSpacing = "1px";
-  const metrics = ctx.measureText(text);
+  const metrics = ctx.measureText(normalizedText);
   const x = (canvasWidth - metrics.width) / 2;
-  ctx.fillText(text, x, y);
+  ctx.fillText(normalizedText, x, y);
   (ctx as any).letterSpacing = "0px";
   return (
     metrics.actualBoundingBoxAscent + metrics.actualBoundingBoxDescent ||
