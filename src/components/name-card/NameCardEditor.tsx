@@ -309,6 +309,7 @@ export default function NameCardEditor() {
                     person={selectedPerson}
                     config={config}
                     canvasRef={previewCanvasRef}
+                    fontsReady={fontsReady}
                   />
                 )}
               </div>
