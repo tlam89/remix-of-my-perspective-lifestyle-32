@@ -1,19 +1,19 @@
 import type { CardConfig, Person } from "./types";
 
-export const NAVY = "#002060";
+export const NAVY = "#f9b342";
 
 export const DEFAULT_CONFIG: CardConfig = {
   zoneTop: 520,
   zoneBottom: 850,
   gapRoleName: 26,
   gapNamePos: 18,
-  fontSizeRole: 46,
-  fontSizeName: 53,
-  fontSizePos: 38,
-  textColor: NAVY,
-  fontFamilyRole: "Helvetica, Arial, sans-serif",
-  fontFamilyName: "Georgia, 'Times New Roman', serif",
-  fontFamilyPos: "Georgia, 'Times New Roman', serif",
+  fontSizeRole: 43,
+  fontSizeName: 43,
+  fontSizePos: 43,
+  textColor: "#f9b342",
+  fontFamilyRole: "'Roboto', Helvetica, Arial, sans-serif",
+  fontFamilyName: "'Roboto', Helvetica, Arial, sans-serif",
+  fontFamilyPos: "'Roboto', Helvetica, Arial, sans-serif",
 };
 
 export const INITIAL_PEOPLE: Person[] = [
