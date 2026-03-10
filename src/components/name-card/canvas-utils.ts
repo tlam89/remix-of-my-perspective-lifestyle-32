@@ -30,8 +30,9 @@ export function measureTextHeight(
   text: string,
   font: string
 ): number {
+  const normalizedText = text.normalize("NFC");
   ctx.font = font;
-  const metrics = ctx.measureText(text);
+  const metrics = ctx.measureText(normalizedText);
   return (
     metrics.actualBoundingBoxAscent + metrics.actualBoundingBoxDescent ||
     parseInt(font) * 1.25
