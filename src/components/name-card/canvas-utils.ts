@@ -9,13 +9,14 @@ export function drawCenteredText(
   color: string,
   canvasWidth: number
 ): number {
+  const normalizedText = text.normalize("NFC");
   ctx.font = font;
   ctx.fillStyle = color;
   ctx.textBaseline = "top";
   (ctx as any).letterSpacing = "1px";
-  const metrics = ctx.measureText(text);
+  const metrics = ctx.measureText(normalizedText);
   const x = (canvasWidth - metrics.width) / 2;
-  ctx.fillText(text, x, y);
+  ctx.fillText(normalizedText, x, y);
   (ctx as any).letterSpacing = "0px";
   return (
     metrics.actualBoundingBoxAscent + metrics.actualBoundingBoxDescent ||
@@ -29,8 +30,9 @@ export function measureTextHeight(
   text: string,
   font: string
 ): number {
+  const normalizedText = text.normalize("NFC");
   ctx.font = font;
-  const metrics = ctx.measureText(text);
+  const metrics = ctx.measureText(normalizedText);
   return (
     metrics.actualBoundingBoxAscent + metrics.actualBoundingBoxDescent ||
     parseInt(font) * 1.25
